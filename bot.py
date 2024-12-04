@@ -104,8 +104,9 @@ def render_circuit(width, height, grid_data):
     return img
 @bot.command()
 async def render(ctx, encoded_circuit):
+    loadingmsg = await ctx.reply("Loading... <a:spinning:1313746013533507636>", mention_author=False)
     try:
-        loadingmsg = await ctx.reply("Loading... <a:spinning:1313746013533507636>", mention_author=False)
+
         # Decode base64 if necessary
         binary_data = base64.b64decode(encoded_circuit)
         # Decompress gzip
@@ -123,10 +124,11 @@ async def render(ctx, encoded_circuit):
         buffer = io.BytesIO()
         circuit_image.save(buffer, format='PNG')
         buffer.seek(0)
-        await loadingmsg.delete()
+
         await ctx.reply(f"Finished rendering circuit {hashlib.md5(decompressed_data).hexdigest()}, {width}x{height}",  file=discord.File(buffer, filename='circuit.png'))
     except Exception as e:
         await ctx.reply(f"Error rendering circuit: {str(e)}")
+    await loadingmsg.delete()
 
 
 def render_noncommand(encoded_circuit):
