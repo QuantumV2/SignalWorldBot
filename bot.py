@@ -37,7 +37,7 @@ CELL_POSITIONS = {
 	9: (1,2),
 	10:(2,2),
 	11:(5,1),
-	12:(5,0),
+	12:(3,2),
 }
 
 # Load the atlas image
